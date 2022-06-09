@@ -1,17 +1,19 @@
 package com.gengaming.lojagames.model;
 
-import java.time.LocalDateTime;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -22,7 +24,7 @@ public class Produto {
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "O campo nome é obrigatório!")
+	@NotNull(message = "O campo nome é obrigatório!")
 	private String nome;
 	
 	private String descricao;
@@ -30,17 +32,32 @@ public class Produto {
 	@NotNull(message = "Informar o tipo de console é obrigatório!")
 	private String console;
 	
-	private Long quantidade;
+	private int quantidade;
 	
 	
 	private String foto;
 
 	@NotNull(message = "Informar o preço do produto é obrigatório!")
-	private Double preco;
+	private BigDecimal preco;
+	
+	@Column(name = "data_lancamento")
+	@JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataLancamento;
 	
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
+	
+	@ManyToOne
+	@JsonIgnoreProperties("produto")
+	private Usuario usuario;
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public Long getId() {
 		return id;
@@ -74,21 +91,29 @@ public class Produto {
 		this.console = console;
 	}
 
-	public Long getQuantidade() {
+
+	public int getQuantidade() {
 		return quantidade;
 	}
 
-	public void setQuantidade(Long quantidade) {
+	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
 
-
-	public Double getPreco() {
+	public BigDecimal getPreco() {
 		return preco;
 	}
 
-	public void setPreco(Double preco) {
+	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
+	}
+
+	public LocalDate getDataLancamento() {
+		return dataLancamento;
+	}
+
+	public void setDataLancamento(LocalDate dataLancamento) {
+		this.dataLancamento = dataLancamento;
 	}
 
 	public Categoria getCategoria() {

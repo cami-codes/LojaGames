@@ -21,8 +21,8 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "O tipo é obrigatório!")
-	private String tipo;
+	@NotBlank(message = "O gênero é obrigatório!")
+	private String genero;
 	
 	@OneToMany (mappedBy = "categoria", cascade = CascadeType.REMOVE)
 	@JsonIgnoreProperties ("categoria")
@@ -32,16 +32,16 @@ public class Categoria {
 		return id;
 	}
 
+	public String getGenero() {
+		return genero;
+	}
+
+	public void setGenero(String genero) {
+		this.genero = genero;
+	}
+
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 
 	public List<Produto> getProduto() {
