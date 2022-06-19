@@ -58,9 +58,9 @@ public class CategoriaController {
 		if(categoria.getId() == null)
 			return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
 		
-	return categoriaRepository.findById(categoria.getId())
-			.map(resposta -> ResponseEntity.status(HttpStatus.OK).body(categoriaRepository.save(categoria)))
-			.orElse((ResponseEntity.notFound().build()));
+		return categoriaRepository.findById(categoria.getId())
+				.map(resposta -> ResponseEntity.ok().body(categoriaRepository.save(categoria)))
+				.orElse(ResponseEntity.notFound().build());
 	}
 	
 	@DeleteMapping("/{id}")

@@ -21,7 +21,7 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@NotBlank(message = "O gênero é obrigatório!")
+	@NotBlank(message = "O gênero do jogo é obrigatório!")
 	private String genero;
 	
 	@OneToMany (mappedBy = "categoria", cascade = CascadeType.REMOVE)
@@ -35,6 +35,7 @@ public class Categoria {
 	public String getGenero() {
 		return genero;
 	}
+
 
 	public void setGenero(String genero) {
 		this.genero = genero;

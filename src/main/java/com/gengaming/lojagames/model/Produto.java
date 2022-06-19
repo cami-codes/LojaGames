@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -21,43 +23,38 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class Produto {
 
 	@Id
-	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY) 
 	private Long id;
 	
-	@NotNull(message = "O campo nome é obrigatório!")
+	@NotNull(message = "O nome é obrigatório!")                                       										
 	private String nome;
 	
+	@Size(max=500)
 	private String descricao;
 	
-	@NotNull(message = "Informar o tipo de console é obrigatório!")
+	@NotNull(message = "Informar o console é obrigatório!")
 	private String console;
 	
 	private int quantidade;
-	
-	
-	private String foto;
-
-	@NotNull(message = "Informar o preço do produto é obrigatório!")
-	private BigDecimal preco;
 	
 	@Column(name = "data_lancamento")
 	@JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataLancamento;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
+	@NotNull(message = "O preço é obrigatório!")
+	@Positive(message = "O preço deve ser maior do que zero.")
+	private BigDecimal preco;
+	
+	private String foto;
+
+	
+	@Column(columnDefinition = "integer default 0")
+	private int curtir;
+
 	@ManyToOne
 	@JsonIgnoreProperties("produto")
 	private Categoria categoria;
-	
-	@ManyToOne
-	@JsonIgnoreProperties("produto")
-	private Usuario usuario;
-
-	public Usuario getUsuario() {
-		return usuario;
-	}
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
 
 	public Long getId() {
 		return id;
@@ -91,21 +88,12 @@ public class Produto {
 		this.console = console;
 	}
 
-
 	public int getQuantidade() {
 		return quantidade;
 	}
 
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
-	}
-
-	public BigDecimal getPreco() {
-		return preco;
-	}
-
-	public void setPreco(BigDecimal preco) {
-		this.preco = preco;
 	}
 
 	public LocalDate getDataLancamento() {
@@ -116,14 +104,14 @@ public class Produto {
 		this.dataLancamento = dataLancamento;
 	}
 
-	public Categoria getCategoria() {
-		return categoria;
+	public BigDecimal getPreco() {
+		return preco;
 	}
 
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
 	}
-	
+
 	public String getFoto() {
 		return foto;
 	}
@@ -131,5 +119,22 @@ public class Produto {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+
+	public int getCurtir() {
+		return curtir;
+	}
+
+	public void setCurtir(int curtir) {
+		this.curtir = curtir;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
 	
 }
